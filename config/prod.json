@@ -1,0 +1,82 @@
+{
+  "baseUrl": "",
+  "loginAPI": "/api/login",
+  "username": "ravi",
+  "password" : "secret",
+  "accountList": {
+    "api": "/services/v1/account/accountList",
+
+    "case1": {
+      "description": "should return account filtered by accountMode",
+      "input": {
+        "accountMode": "Cash"
+      },
+      "output": {
+        "statusCode": 200,
+        "body": {
+          "accounts": [
+            {
+              "accountID": 1,
+              "accountMode": "Cash",
+              "accountShortName": "Trust - 6956"
+            }
+          ]
+        }
+      }
+    },
+
+    "case2": {
+      "description": "should return 404 if no accounts match filters",
+      "input": {
+        "accountMode": "Invalid"
+      },
+      "output": {
+        "statusCode": 404,
+        "body": {
+          "message": "No accounts found matching the criteria"
+        }
+      }
+    },
+
+    "case3": {
+      "description": "should return error for invalid accountID",
+      "input": {
+        "accountID": "abc"
+      },
+      "output": {
+        "statusCode": 400,
+        "body": {
+          "error": "Invalid accountID parameter"
+        }
+      }
+    }
+  },
+  "userDetails": {
+    "api": "/services/v2/user/userDetails",
+    "case1": {
+      "description": "should return user details correctly",
+      "input": {},
+      "output": {
+        "statusCode": 200,
+        "numberOfAccounts": 9,
+        "body": {
+          "mobile_response": {
+            "views": [
+              {
+                "type": "user_details",
+                "data": [
+                  {
+                    "accountid": "123456",
+                    "numberOfAccounts": 9,
+                    "userId": 102334
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+
+}
